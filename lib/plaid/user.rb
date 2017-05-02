@@ -212,7 +212,8 @@ module Plaid
       conn = Connector.new(product, :step, auth: true)
 
       # Use PATCH if we are in context of User#update.
-      response = if @mfa_patch
+      # Use PATCH if the {update: true} was passed in the options Hash
+      response = if @mfa_patch || options[:update]
                    conn.patch(payload)
                  else
                    conn.post(payload)
