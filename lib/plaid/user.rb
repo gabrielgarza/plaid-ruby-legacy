@@ -201,7 +201,7 @@ module Plaid
     #                             will be collected (default: today).
     #
     # Returns true if whole MFA process is completed, false otherwise.
-    def mfa_step(info = nil, send_method: nil, options: nil)
+    def mfa_step(info = nil, send_method: nil, options = {})
       payload = { access_token: access_token }
       payload[:mfa] = info if info
       if options || send_method
