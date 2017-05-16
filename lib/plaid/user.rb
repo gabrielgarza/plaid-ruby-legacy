@@ -201,7 +201,7 @@ module Plaid
     #                             will be collected (default: today).
     #
     # Returns true if whole MFA process is completed, false otherwise.
-    def mfa_step(info = nil, send_method: nil, options = {})
+    def mfa_step(info = nil, send_method: nil, options: nil)
       payload = { access_token: access_token }
       payload[:mfa] = info if info
       if options || send_method
@@ -213,7 +213,7 @@ module Plaid
 
       # Use PATCH if we are in context of User#update.
       # Use PATCH if the {update: true} was passed in the options Hash
-      response = if @mfa_patch || options[:update]
+      response = if @mfa_patch || (options && options[:update])
                    conn.patch(payload)
                  else
                    conn.post(payload)
