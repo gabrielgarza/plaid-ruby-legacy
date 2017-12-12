@@ -11,8 +11,8 @@ class PlaidConnectorTest < MiniTest::Test
   def test_env_not_set
     reset_config
 
-    assert_raises(Plaid::NotConfiguredError) do
-      Plaid::Connector.new(:categories)
+    assert_raises(PlaidLegacy::NotConfiguredError) do
+      PlaidLegacy::Connector.new(:categories)
     end
   end
 
@@ -20,10 +20,10 @@ class PlaidConnectorTest < MiniTest::Test
     reset_config
     tartan
 
-    Plaid.client.secret = 'fun'
+    PlaidLegacy.client.secret = 'fun'
 
-    e = assert_raises(Plaid::NotConfiguredError) do
-      Plaid::Connector.new(:connect, auth: true)
+    e = assert_raises(PlaidLegacy::NotConfiguredError) do
+      PlaidLegacy::Connector.new(:connect, auth: true)
     end
 
     assert_match(/must set Plaid::Client\.client_id/, e.message)
@@ -33,10 +33,10 @@ class PlaidConnectorTest < MiniTest::Test
     reset_config
     tartan
 
-    Plaid.client.client_id = 'fun'
+    PlaidLegacy.client.client_id = 'fun'
 
-    e = assert_raises(Plaid::NotConfiguredError) do
-      Plaid::Connector.new(:connect, auth: true)
+    e = assert_raises(PlaidLegacy::NotConfiguredError) do
+      PlaidLegacy::Connector.new(:connect, auth: true)
     end
 
     assert_match(/must set Plaid::Client\.secret/, e.message)
@@ -45,7 +45,7 @@ class PlaidConnectorTest < MiniTest::Test
   def test_200
     stub_test 200, body: '{"test": true}'
 
-    conn = Plaid::Connector.new(:test)
+    conn = PlaidLegacy::Connector.new(:test)
 
     assert_equal({ 'test' => true }, conn.get)
     refute conn.mfa?
@@ -54,7 +54,7 @@ class PlaidConnectorTest < MiniTest::Test
   def test_201
     stub_test 201, body: '{"test": true}'
 
-    conn = Plaid::Connector.new(:test)
+    conn = PlaidLegacy::Connector.new(:test)
 
     assert_equal({ 'test' => true }, conn.get)
     assert conn.mfa?
@@ -62,37 +62,37 @@ class PlaidConnectorTest < MiniTest::Test
 
   def test_400
     stub_test 400
-    e = assert_raises(Plaid::BadRequestError) { make_request }
+    e = assert_raises(PlaidLegacy::BadRequestError) { make_request }
     check_exception e
   end
 
   def test_401
     stub_test 401
-    e = assert_raises(Plaid::UnauthorizedError) { make_request }
+    e = assert_raises(PlaidLegacy::UnauthorizedError) { make_request }
     check_exception e
   end
 
   def test_402
     stub_test 402
-    e = assert_raises(Plaid::RequestFailedError) { make_request }
+    e = assert_raises(PlaidLegacy::RequestFailedError) { make_request }
     check_exception e
   end
 
   def test_404
     stub_test 404
-    e = assert_raises(Plaid::NotFoundError) { make_request }
+    e = assert_raises(PlaidLegacy::NotFoundError) { make_request }
     check_exception e
   end
 
   def test_500
     stub_test 500
-    e = assert_raises(Plaid::ServerError) { make_request }
+    e = assert_raises(PlaidLegacy::ServerError) { make_request }
     check_exception e
   end
 
   def test_500_without_body
     stub_test 500, body: ''
-    e = assert_raises(Plaid::ServerError) { make_request }
+    e = assert_raises(PlaidLegacy::ServerError) { make_request }
 
     assert_equal 0, e.code
     assert_equal 'Try to connect later', e.resolve
@@ -102,7 +102,7 @@ class PlaidConnectorTest < MiniTest::Test
   private
 
   def make_request
-    Plaid::Connector.new(:test).get
+    PlaidLegacy::Connector.new(:test).get
   end
 
   def error_body

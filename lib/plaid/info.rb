@@ -1,4 +1,4 @@
-module Plaid
+module PlaidLegacy
   # Public: Representation of user information.
   class Info
     # Public: The Array of String user names.
@@ -30,15 +30,15 @@ module Plaid
     def initialize(fields)
       @names = fields['names']
       @emails = fields['emails'].map do |h|
-        symbolize_values Plaid.symbolize_hash(h), :type
+        symbolize_values PlaidLegacy.symbolize_hash(h), :type
       end
 
       @phone_numbers = fields['phone_numbers'].map do |h|
-        symbolize_values Plaid.symbolize_hash(h), :type
+        symbolize_values PlaidLegacy.symbolize_hash(h), :type
       end
 
       @addresses = fields['addresses'].map do |h|
-        Plaid.symbolize_hash(h)
+        PlaidLegacy.symbolize_hash(h)
       end
     end
 

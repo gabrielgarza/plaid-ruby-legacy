@@ -1,4 +1,4 @@
-module Plaid
+module PlaidLegacy
   # Public: A class encapsulating client_id, secret, and Plaid API URL.
   class Client
     # Public: The String Plaid account client ID to authenticate requests.

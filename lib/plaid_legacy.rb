@@ -13,7 +13,7 @@ require 'plaid/webhook'
 require 'uri'
 
 # Public: The Plaid namespace.
-module Plaid
+module PlaidLegacy
   # Public: Available Plaid products.
   PRODUCTS = %i(connect auth info income risk).freeze
 

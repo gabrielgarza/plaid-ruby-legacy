@@ -1,4 +1,4 @@
-module Plaid
+module PlaidLegacy
   # Public: A class encapsulating information about a Financial Institution
   # supported by Plaid.
   class Institution
@@ -68,7 +68,7 @@ module Plaid
     # count    - The Integer number of results to retrieve (default: 50).
     # offset   - The Integer number of results to skip forward from the
     #            beginning of the list (default: 0).
-    # products - The Array of product Symbols (see Plaid::PRODUCTS) or nil.
+    # products - The Array of product Symbols (see PlaidLegacy::PRODUCTS) or nil.
     #            E.g. [:connect, :auth]. Default: nil.
     # client   - The Plaid::Client instance used to connect
     #            (default: Plaid.client).
@@ -141,7 +141,7 @@ module Plaid
     # Returns an SearchResultInstitution instance or nil if institution with
     # given id is not found.
     def self.search_by_id(id, client: nil)
-      client ||= Plaid.client
+      client ||= PlaidLegacy.client
 
       # If client_id is set, use it, no authentication otherwise
       auth = client && !client.client_id.nil?
@@ -228,12 +228,12 @@ module Plaid
         instance_variable_set "@#{f}", hash[f]
       end
 
-      @products = Plaid.symbolize_hash(hash['products'])
+      @products = PlaidLegacy.symbolize_hash(hash['products'])
       @forgotten_password_url = hash['forgottenPassword']
       @account_locked_url = hash['accountLocked']
       @account_setup_url = hash['accountSetup']
-      @fields = hash['fields'].map { |fld| Plaid.symbolize_hash(fld) }
-      @colors = Plaid.symbolize_hash(hash['colors'])
+      @fields = hash['fields'].map { |fld| PlaidLegacy.symbolize_hash(fld) }
+      @colors = PlaidLegacy.symbolize_hash(hash['colors'])
       @name_break = hash['nameBreak']
     end
 

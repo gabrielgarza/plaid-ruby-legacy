@@ -5,7 +5,7 @@ require 'plaid/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'plaid-legacy'
-  spec.version       = Plaid::VERSION
+  spec.version       = PlaidLegacy::VERSION
   spec.authors       = ['Oleg Dashevskii']
   spec.email         = ['olegdashevskii@gmail.com']
 

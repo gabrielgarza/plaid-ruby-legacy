@@ -1,4 +1,4 @@
-module Plaid
+module PlaidLegacy
   # Public: A class which encapsulates information about a Plaid category.
   class Category
     # Public: The String category ID, e.g. "21010006".

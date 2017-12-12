@@ -15,10 +15,10 @@ class PlaidAccountTest < MiniTest::Test
   end
 
   def test_initialization_with_risk
-    a = Plaid::Account.new(account_data_with_risk)
+    a = PlaidLegacy::Account.new(account_data_with_risk)
     check_basic_data a
 
-    assert_kind_of Plaid::Risk, a.risk
+    assert_kind_of PlaidLegacy::Risk, a.risk
   end
 
   def test_string_representation
@@ -36,9 +36,9 @@ class PlaidAccountTest < MiniTest::Test
                             current_balance: 1200)
                .merge('risk' => { 'score' => 0.99 })
 
-    new_accounts = [Plaid::Account.new(new_data)]
+    new_accounts = [PlaidLegacy::Account.new(new_data)]
 
-    Plaid::Account.merge(accounts, new_accounts)
+    PlaidLegacy::Account.merge(accounts, new_accounts)
 
     assert_equal 1, accounts.size
     assert_equal 1000, accounts[0].available_balance
@@ -49,9 +49,9 @@ class PlaidAccountTest < MiniTest::Test
 
   def test_merge_adds_new_account
     accounts = [acc]
-    new_accounts = [Plaid::Account.new(account_data(id: '123456'))]
+    new_accounts = [PlaidLegacy::Account.new(account_data(id: '123456'))]
 
-    Plaid::Account.merge(accounts, new_accounts)
+    PlaidLegacy::Account.merge(accounts, new_accounts)
 
     assert_equal 2, accounts.size
     assert_equal 'QPO8Jo8vdDHMepg41PBwckXm4KdK1yUdmXOwK', accounts[0].id
@@ -62,7 +62,7 @@ class PlaidAccountTest < MiniTest::Test
     accounts = [acc_with_numbers]
     new_accounts = [acc]
 
-    Plaid::Account.merge(accounts, new_accounts)
+    PlaidLegacy::Account.merge(accounts, new_accounts)
 
     assert_equal 1, accounts.size
     assert_equal '021000021', accounts[0].numbers[:routing]
@@ -71,11 +71,11 @@ class PlaidAccountTest < MiniTest::Test
   private
 
   def acc
-    @acc ||= Plaid::Account.new(account_data)
+    @acc ||= PlaidLegacy::Account.new(account_data)
   end
 
   def acc_with_numbers
-    @acc_with_numbers ||= Plaid::Account.new(account_data_with_numbers)
+    @acc_with_numbers ||= PlaidLegacy::Account.new(account_data_with_numbers)
   end
 
   def account_data(available_balance: 1203.42, current_balance: 1274.93,

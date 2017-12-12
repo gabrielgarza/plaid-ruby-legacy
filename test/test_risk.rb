@@ -24,7 +24,7 @@ class PlaidRiskTest < MiniTest::Test
   private
 
   def risk
-    @risk ||= Plaid::Risk.new(risk_data)
+    @risk ||= PlaidLegacy::Risk.new(risk_data)
   end
 
   def risk_data

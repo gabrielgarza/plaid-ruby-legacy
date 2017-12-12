@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'date'
 
-module Plaid
+module PlaidLegacy
   # Public: Representation of a transaction.
   class Transaction
     # Public: The String unique ID of the transaction. E.g.
@@ -92,14 +92,14 @@ module Plaid
       @date = fields['date'] && Date.parse(fields['date'])
       @amount = fields['amount']
       @name = fields['name']
-      @meta = Plaid.symbolize_hash(fields['meta'])
+      @meta = PlaidLegacy.symbolize_hash(fields['meta'])
       @location = (@meta && @meta[:location]) || {}
       @pending = fields['pending']
       @reference_number = fields['_reference_number']
       @pending_transaction_id = fields['_pendingTransaction']
-      @score = Plaid.symbolize_hash(fields['score'])
+      @score = PlaidLegacy.symbolize_hash(fields['score'])
 
-      @type = Plaid.symbolize_hash(fields['type'], values: true)
+      @type = PlaidLegacy.symbolize_hash(fields['type'], values: true)
       @category_hierarchy = fields['category']
       @category_id = fields['category_id']
     end

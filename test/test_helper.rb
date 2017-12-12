@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'webmock/minitest'
 
-require 'plaid'
+require 'plaid_legacy'
 
 # Internal: Helpers to be included to the test classes.
 module TestHelpers
@@ -10,18 +10,18 @@ module TestHelpers
   end
 
   def reset_config
-    Plaid.config do |_|
+    PlaidLegacy.config do |_|
     end
   end
 
   def tartan
-    Plaid.config do |p|
+    PlaidLegacy.config do |p|
       p.env = :tartan
     end
   end
 
   def full_test_credentials
-    Plaid.config do |p|
+    PlaidLegacy.config do |p|
       p.env = :tartan
       p.client_id = 'test_id'
       p.secret = 'test_secret'
