@@ -1,4 +1,4 @@
-require 'plaid/risk'
+require 'plaid_legacy/risk'
 
 module PlaidLegacy
   # Public: Representation of user account data.
