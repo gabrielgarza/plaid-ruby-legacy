@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['olegdashevskii@gmail.com']
 
   spec.summary       = 'Ruby bindings for Plaid\'s legacy API'
-  spec.description   = 'Ruby gem wrapper for the Plaid\'s legacy API. Read more at the ' \
+  spec.description   = 'Ruby gem wrapper for the Plaid\'s legacy API. Read more at the '
                        'homepage, the wiki, or in the Plaid documentation.'
   spec.homepage      = 'https://github.com/plaid/plaid-ruby-legacy'
   spec.license       = 'MIT'
