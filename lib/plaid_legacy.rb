@@ -40,7 +40,7 @@ module PlaidLegacy
     #
     # Returns nothing.
     def config
-      client = Client.new
+      client = PlaidLegacy::Client.new
       yield client
       self.client = client
     end
