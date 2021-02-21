@@ -1,4 +1,4 @@
-module Plaid
+module PlaidLegacy
   # Public: Representation of risk data (per account).
   class Risk
     # Public: The Float comprehensive risk score associated with the account,
@@ -16,7 +16,7 @@ module Plaid
     # fields - The Hash with fields.
     def initialize(fields)
       @score = fields['score']
-      @reason = Plaid.symbolize_hash(fields['reason'])
+      @reason = PlaidLegacy.symbolize_hash(fields['reason'])
     end
 
     # Public: Get a String representation of Risk.

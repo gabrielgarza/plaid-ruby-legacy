@@ -1,4 +1,4 @@
-module Plaid
+module PlaidLegacy
   # Public: Exception to throw when there are configuration problems
   class NotConfiguredError < StandardError; end
 

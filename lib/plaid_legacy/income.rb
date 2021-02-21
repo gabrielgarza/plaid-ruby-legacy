@@ -1,4 +1,4 @@
-module Plaid
+module PlaidLegacy
   # Public: Representation of Income data.
   class Income
     # Public: The class encapsulating an income stream.

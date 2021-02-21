@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'plaid/version'
+require 'plaid_legacy/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'plaid-legacy'
-  spec.version       = Plaid::VERSION
+  spec.version       = PlaidLegacy::VERSION
   spec.authors       = ['Oleg Dashevskii']
   spec.email         = ['olegdashevskii@gmail.com']
 
   spec.summary       = 'Ruby bindings for Plaid\'s legacy API'
-  spec.description   = 'Ruby gem wrapper for the Plaid\'s legacy API. Read more at the ' \
+  spec.description   = 'Ruby gem wrapper for the Plaid\'s legacy API. Read more at the '
                        'homepage, the wiki, or in the Plaid documentation.'
   spec.homepage      = 'https://github.com/plaid/plaid-ruby-legacy'
   spec.license       = 'MIT'
@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'multi_json', '~> 1.0'
 
-  spec.add_development_dependency 'bundler', '~> 1.7'
+  spec.add_development_dependency 'bundler', '~> 1.14.6'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'sdoc', '~> 0.4.1'
   spec.add_development_dependency 'pry', '~> 0.10.3'

@@ -2,7 +2,7 @@ require 'net/http'
 require 'uri'
 require 'multi_json'
 
-module Plaid
+module PlaidLegacy
   # Internal: A class encapsulating HTTP requests to the Plaid API servers
   class Connector
     attr_reader :uri, :http, :request, :response, :body
@@ -20,7 +20,7 @@ module Plaid
     #           (default: Plaid.client).
     def initialize(path, subpath = nil, auth: false, client: nil)
       @auth = auth
-      @client = client || Plaid.client
+      @client = client || PlaidLegacy.client
       verify_configuration
 
       path = File.join(@client.env, path.to_s)
@@ -31,7 +31,7 @@ module Plaid
       @http = Net::HTTP.new(@uri.host, @uri.port)
       @http.use_ssl = true
 
-      @http.read_timeout = Plaid.read_timeout || DEFAULT_TIMEOUT
+      @http.read_timeout = PlaidLegacy.read_timeout || DEFAULT_TIMEOUT
     end
 
     # Internal: Run GET request.
@@ -96,7 +96,7 @@ module Plaid
       @response = http.request(@request)
 
       if @response.body.nil? || @response.body.empty?
-        raise Plaid::ServerError.new(0, 'Server error', 'Try to connect later')
+        raise PlaidLegacy::ServerError.new(0, 'Server error', 'Try to connect later')
       end
 
       # All responses are expected to have a JSON body, so we always parse,
@@ -126,12 +126,12 @@ module Plaid
     # Returns an Array with arguments.
     def raise_error
       klass = case @response
-              when Net::HTTPBadRequest then Plaid::BadRequestError
-              when Net::HTTPUnauthorized then Plaid::UnauthorizedError
-              when Net::HTTPPaymentRequired then Plaid::RequestFailedError
-              when Net::HTTPNotFound then Plaid::NotFoundError
+              when Net::HTTPBadRequest then PlaidLegacy::BadRequestError
+              when Net::HTTPUnauthorized then PlaidLegacy::UnauthorizedError
+              when Net::HTTPPaymentRequired then PlaidLegacy::RequestFailedError
+              when Net::HTTPNotFound then PlaidLegacy::NotFoundError
               else
-                Plaid::ServerError
+                PlaidLegacy::ServerError
               end
 
       raise klass.new(body['code'], body['message'], body['resolve'])

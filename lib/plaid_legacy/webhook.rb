@@ -1,4 +1,4 @@
-module Plaid
+module PlaidLegacy
   # Public: Representation of a webhook.
   class Webhook
     # Public: The String human readable explanation of this webhook request.
@@ -113,7 +113,7 @@ module Plaid
     # Returns Plaid::Error or nil
     def error
       if error_response?
-        Plaid::PlaidError.new @code, @message, @resolve
+        PlaidLegacy::PlaidError.new @code, @message, @resolve
       end
     end
 

@@ -9,7 +9,7 @@ class PlaidInfoTest < MiniTest::Test
   end
 
   def test_initialize
-    info = Plaid::Info.new(parsed_info_data)
+    info = PlaidLegacy::Info.new(parsed_info_data)
 
     assert_equal ['Frodo Baggins', 'Samwise Gamgee'], info.names
 
@@ -28,7 +28,7 @@ class PlaidInfoTest < MiniTest::Test
   end
 
   def test_string_representation
-    info = Plaid::Info.new(parsed_info_data)
+    info = PlaidLegacy::Info.new(parsed_info_data)
 
     str = '#<Plaid::Info names=["Frodo Baggins", "Samwise Gamgee"], ...>'
 

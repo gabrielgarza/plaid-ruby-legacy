@@ -1,6 +1,6 @@
 require_relative 'account'
 
-module Plaid
+module PlaidLegacy
   # Public: A class which encapsulates the authenticated user for all Plaid
   # products.
   class User
@@ -449,11 +449,11 @@ module Plaid
 
     # Internal: Validate the product name.
     def self.check_product(product)
-      if Plaid::PRODUCTS.include?(product)
+      if PlaidLegacy::PRODUCTS.include?(product)
         product
       else
         raise ArgumentError, "product (#{product.inspect}) must be one of " \
-                             "Plaid products (#{Plaid::PRODUCTS.inspect})"
+                             "Plaid products (#{PlaidLegacy::PRODUCTS.inspect})"
       end
     end
 
@@ -475,17 +475,17 @@ module Plaid
       end
 
       if (income = response['income'])
-        @income = Plaid::Income.new(income)
+        @income = PlaidLegacy::Income.new(income)
       end
 
       return unless (i = response['info'])
-      @info = Plaid::Info.new(i)
+      @info = PlaidLegacy::Info.new(i)
     end
 
     # Internal: Parse an MFA response
     def parse_mfa_response(response)
       @mfa_type = response['type'].to_sym
-      @mfa = Plaid.symbolize_hash(response['mfa'])
+      @mfa = PlaidLegacy.symbolize_hash(response['mfa'])
     end
 
     # Internal: Convert an array of data into an array of objects, encapsulating

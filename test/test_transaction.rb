@@ -3,7 +3,7 @@ require 'test_helper'
 # Internal: The test for Plaid::Transaction.
 class PlaidTransactionTest < MiniTest::Test
   def test_initialization
-    trans = Plaid::Transaction.new(parsed_transaction_data)
+    trans = PlaidLegacy::Transaction.new(parsed_transaction_data)
 
     assert_equal '0AZ0De04KqsreDgVwM1RSRYjyd8yXxSDQ8Zxn', trans.id
     assert_equal 'XARE85EJqKsjxLp6XR8ocg8VakrkXpTXmRdOo', trans.account_id
@@ -29,14 +29,14 @@ class PlaidTransactionTest < MiniTest::Test
   end
 
   def test_pending
-    trans = Plaid::Transaction.new(parsed_transaction_data(pending: true))
+    trans = PlaidLegacy::Transaction.new(parsed_transaction_data(pending: true))
 
     assert trans.pending
     assert_predicate trans, :pending?
   end
 
   def test_string_representation
-    trans = Plaid::Transaction.new(parsed_transaction_data)
+    trans = PlaidLegacy::Transaction.new(parsed_transaction_data)
 
     s = '#<Plaid::Transaction id="0AZ0De04KqsreDgVwM1RSRYjyd8yXxSDQ8Zxn", '\
         'account_id="XARE85EJqKsjxLp6XR8ocg8VakrkXpTXmRdOo", date=2014-07-21, '\

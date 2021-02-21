@@ -1,1 +1,1 @@
-require 'plaid'
+require 'plaid_legacy'

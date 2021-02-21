@@ -1,6 +1,6 @@
-require 'plaid/risk'
+require 'plaid_legacy/risk'
 
-module Plaid
+module PlaidLegacy
   # Public: Representation of user account data.
   class Account
     # Public: The String unique ID of the account. E.g.
@@ -67,10 +67,10 @@ module Plaid
       end
 
       if (risk = hash['risk'])
-        @risk = Plaid::Risk.new(risk)
+        @risk = PlaidLegacy::Risk.new(risk)
       end
 
-      @numbers = Plaid.symbolize_hash(hash['numbers'])
+      @numbers = PlaidLegacy.symbolize_hash(hash['numbers'])
     end
 
     # Public: Get a String representation of the account.

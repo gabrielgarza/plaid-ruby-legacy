@@ -1,19 +1,19 @@
-require 'plaid/version'
-require 'plaid/errors'
-require 'plaid/connector'
-require 'plaid/category'
-require 'plaid/institution'
-require 'plaid/user'
-require 'plaid/transaction'
-require 'plaid/info'
-require 'plaid/income'
-require 'plaid/client'
-require 'plaid/webhook'
+require 'plaid_legacy/version'
+require 'plaid_legacy/errors'
+require 'plaid_legacy/connector'
+require 'plaid_legacy/category'
+require 'plaid_legacy/institution'
+require 'plaid_legacy/user'
+require 'plaid_legacy/transaction'
+require 'plaid_legacy/info'
+require 'plaid_legacy/income'
+require 'plaid_legacy/client'
+require 'plaid_legacy/webhook'
 
 require 'uri'
 
 # Public: The Plaid namespace.
-module Plaid
+module PlaidLegacy
   # Public: Available Plaid products.
   PRODUCTS = %i(connect auth info income risk).freeze
 
@@ -40,7 +40,7 @@ module Plaid
     #
     # Returns nothing.
     def config
-      client = Client.new
+      client = PlaidLegacy::Client.new
       yield client
       self.client = client
     end

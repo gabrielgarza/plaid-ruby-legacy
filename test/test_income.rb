@@ -49,7 +49,7 @@ class PlaidIncomeTest < MiniTest::Test
   private
 
   def income
-    @income ||= Plaid::Income.new(income_data)
+    @income ||= PlaidLegacy::Income.new(income_data)
   end
 
   def income_data

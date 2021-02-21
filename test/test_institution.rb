@@ -24,7 +24,7 @@ class PlaidInstitutionTest < MiniTest::Test
                      secret: 'test_secret' },
              response: :institutions
 
-    insts = Plaid::Institution.all(count: 27, offset: 39)
+    insts = PlaidLegacy::Institution.all(count: 27, offset: 39)
 
     assert_equal 14, insts.size
     assert_equal 1234, insts.total_count
@@ -49,14 +49,14 @@ class PlaidInstitutionTest < MiniTest::Test
                      secret: 'test_secret' },
              response: :institutions, host: 'example.com'
 
-    Plaid::Institution.all(count: 27, offset: 39, client: custom_client)
+    PlaidLegacy::Institution.all(count: 27, offset: 39, client: custom_client)
   end
 
   def test_get_single_institution
     stub_api :get, 'institutions/all/5301a99504977c52b60000d0',
              response: :institution_chase
 
-    i = Plaid::Institution.get '5301a99504977c52b60000d0'
+    i = PlaidLegacy::Institution.get '5301a99504977c52b60000d0'
     refute_nil i
 
     assert_equal({ 'username' => 'User ID', 'password' => 'Password' },
@@ -74,15 +74,15 @@ class PlaidInstitutionTest < MiniTest::Test
     stub_api :get, 'institutions/all/123', response: :institution_chase,
              host: 'example.com'
 
-    Plaid::Institution.get '123', client: custom_client
+    PlaidLegacy::Institution.get '123', client: custom_client
   end
 
   def test_get_nonexistent_institution
     stub_api :get, 'institutions/all/0', response: :institution_not_found,
                                      status: 404
 
-    e = assert_raises(Plaid::NotFoundError) do
-      Plaid::Institution.get '0'
+    e = assert_raises(PlaidLegacy::NotFoundError) do
+      PlaidLegacy::Institution.get '0'
     end
 
     assert_equal 'Code 1301: unable to find institution. Double-check the ' \
@@ -92,31 +92,31 @@ class PlaidInstitutionTest < MiniTest::Test
   private
 
   def custom_client
-    Plaid::Client.new(env: 'https://example.com',
-                      client_id: 'test_id', secret: 'test_secret')
+    PlaidLegacy::Client.new(env: 'https://example.com',
+                            client_id: 'test_id', secret: 'test_secret')
   end
 
   def bofa
-    Plaid::Institution.new('credentials' => {
+    PlaidLegacy::Institution.new('credentials' => {
                              'username' => 'Online ID',
                              'password' => 'Password'
                            },
-                           'has_mfa' => true,
-                           'id' => '5301a93ac140de84910000e0',
-                           'mfa' => [
+                                 'has_mfa' => true,
+                                 'id' => '5301a93ac140de84910000e0',
+                                 'mfa' => [
                              'code',
                              'list',
                              'questions(3)'
                            ],
-                           'name' => 'Bank of America',
-                           'products' => %w(
+                                 'name' => 'Bank of America',
+                                 'products' => %w(
                              connect
                              auth
                              balance
                              info
                              income
                              risk),
-                           'type' => 'bofa')
+                                 'type' => 'bofa')
   end
 end
 
@@ -131,7 +131,7 @@ class PlaidSearchResultInstitutionTest < MiniTest::Test
   end
 
   def test_initialization
-    lti = Plaid::SearchResultInstitution.new(bofa_data)
+    lti = PlaidLegacy::SearchResultInstitution.new(bofa_data)
 
     assert_equal 'bofa', lti.id
     assert_equal 'bofa', lti.type
@@ -162,7 +162,7 @@ class PlaidSearchResultInstitutionTest < MiniTest::Test
   end
 
   def test_string_representation
-    lti = Plaid::SearchResultInstitution.new(bofa_data)
+    lti = PlaidLegacy::SearchResultInstitution.new(bofa_data)
     s = '#<Plaid::LongTailInstitution id="schwab", name="Charles Schwab", ...>'
 
     assert s, lti.to_s
@@ -173,11 +173,11 @@ class PlaidSearchResultInstitutionTest < MiniTest::Test
     stub_api :get, 'institutions/all/search',
              query: { q: 'c', p: 'connect' },
              response: :longtail_bunch
-    all = Plaid::Institution.search(query: 'c', product: :connect)
+    all = PlaidLegacy::Institution.search(query: 'c', product: :connect)
 
     assert_equal 4, all.size
     all.each do |lti|
-      assert_kind_of Plaid::SearchResultInstitution, lti
+      assert_kind_of PlaidLegacy::SearchResultInstitution, lti
     end
   end
 
@@ -187,32 +187,32 @@ class PlaidSearchResultInstitutionTest < MiniTest::Test
              response: :longtail_bunch, host: 'example.com'
 
 
-    Plaid::Institution.search(query: 'c', product: :connect,
-                              client: custom_client)
+    PlaidLegacy::Institution.search(query: 'c', product: :connect,
+                                    client: custom_client)
   end
 
   def test_search_only_query
     stub_api :get, 'institutions/all/search',
              query: { q: 'c' },
              response: :longtail_bunch
-    Plaid::Institution.search(query: 'c')
+    PlaidLegacy::Institution.search(query: 'c')
   end
 
   def test_search_no_query
     assert_raises ArgumentError do
-      Plaid::Institution.search
+      PlaidLegacy::Institution.search
     end
 
     assert_raises ArgumentError do
-      Plaid::Institution.search(query: '')
+      PlaidLegacy::Institution.search(query: '')
     end
   end
 
   private
 
   def custom_client
-    Plaid::Client.new(env: 'https://example.com', client_id: 'test_id',
-                      secret: 'test_secret')
+    PlaidLegacy::Client.new(env: 'https://example.com', client_id: 'test_id',
+                            secret: 'test_secret')
   end
 
   def bofa_data
